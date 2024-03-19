@@ -1,0 +1,34 @@
+/*Mzameli Mashiyi | Magna Pilot Project | 15 March 2024*/
+#include <DHT.h>
+
+#define DHTPIN 8     // Digital pin connected to the DHT sensor
+#define DHTTYPE DHT22   // DHT 22  (AM2302)
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("DHT22 Humidity & temperature Sensor\n");
+  
+  dht.begin();
+}
+
+void loop() {
+  delay(2000);  // Delay between sensor readings
+  
+  float humidity = dht.readHumidity();    // Read humidity
+  float temperature = dht.readTemperature();  // Read temperature in Celsius
+
+  if (isnan(humidity) || isnan(temperature)) {  // Check if any reads failed
+    Serial.println("Failed to read from DHT sensor!");
+    return;
+  }
+
+  Serial.print("Humidity: ");
+  Serial.print(humidity);
+  Serial.print("%\t");
+
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.println("°C");
+}
